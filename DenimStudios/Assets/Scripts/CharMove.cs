@@ -11,7 +11,6 @@ public class CharMove : MonoBehaviour
 
     Rigidbody rb;
     public float speed = 8f;
-    //public float jumpPower = 11f;
 
     public bool IsLookingLeft = true;
     public bool isGrounded;
