@@ -5,7 +5,7 @@ using UnityEngine;
 public class GridPush : MonoBehaviour
 {
     public bool isPushed = false;
-    public float pushPower = 200f;
+    public float pushPower = 1100f;
 
     void OnCollisionEnter(Collision collision)
     {
