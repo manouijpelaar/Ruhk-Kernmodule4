@@ -39,29 +39,31 @@ public class PickUp : MonoBehaviour
 
             else
             {
-                
-                if (Input.GetKeyDown(KeyCode.G))
+                if (pickedUp == true && Movement.GetComponent<PlayerMovement>().pickedUpObject == true)
                 {
-                    eggParent.transform.parent = null;
-                    eggParent.GetComponent<CapsuleCollider>().enabled = true;
-                    eggParent.GetComponent<Rigidbody>().useGravity = true;
-                    eggParent.GetComponent<Rigidbody>().isKinematic = false;
+                    if (Input.GetKeyDown(KeyCode.G))
+                    {
+                        Movement.GetComponent<PlayerMovement>().runSpeed *= 1.5f;
+                        Player.GetComponent<CharacterController2D>().jumpVelocity = 15;
+                        eggParent.transform.parent = null;
+                        eggParent.GetComponent<CapsuleCollider>().enabled = true;
+                        eggParent.GetComponent<Rigidbody>().useGravity = true;
+                        eggParent.GetComponent<Rigidbody>().isKinematic = false;
 
-                    if (Player.m_FacingRight == true)
-                    {
-                        eggParent.transform.position = new Vector3(TheDest.position.x + 2, TheDest.position.y, TheDest.position.z);
-                        
+                        if (Player.m_FacingRight == true)
+                        {
+                            eggParent.transform.position = new Vector3(TheDest.position.x + 2, TheDest.position.y + 1, TheDest.position.z);
+
+                        }
+                        if (Player.m_FacingRight == false)
+                        {
+                            eggParent.transform.position = new Vector3(TheDest.position.x - 2, TheDest.position.y + 1, TheDest.position.z);
+                        }
+
+                        pickedUp = false;
+                        Movement.GetComponent<PlayerMovement>().pickedUpObject = false;
+                        Debug.Log("loss!");
                     }
-                    if (Player.m_FacingRight == false)
-                    {
-                        eggParent.transform.position = new Vector3(TheDest.position.x -2, TheDest.position.y, TheDest.position.z);
-                    }
-                    
-                    pickedUp = false;
-                    Movement.GetComponent<PlayerMovement>().pickedUpObject = false;
-                    Player.GetComponent<CharacterController2D>().jumpVelocity = 15;
-                    Movement.GetComponent<PlayerMovement>().runSpeed *= 1.5f;
-                    Debug.Log("loss!");
                 }
             }
         }
