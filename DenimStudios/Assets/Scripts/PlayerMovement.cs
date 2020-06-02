@@ -8,6 +8,8 @@ public class PlayerMovement : MonoBehaviour
 
     public float runSpeed = 40f;
 
+    public bool pickedUpObject;
+
     float horizontalMove = 0f;
     bool jump = false;
 
