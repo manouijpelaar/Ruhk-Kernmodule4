@@ -22,7 +22,7 @@ public class PickUp : MonoBehaviour
         {
             if (pickedUp == false && Movement.GetComponent<PlayerMovement>().pickedUpObject == false)
             {
-                if (Input.GetKeyDown(KeyCode.E))
+                if (Input.GetKeyDown(KeyCode.J))
                 {
                     eggParent.GetComponent<CapsuleCollider>().enabled = false;
                     eggParent.GetComponent<Rigidbody>().useGravity = false;
@@ -41,7 +41,7 @@ public class PickUp : MonoBehaviour
             {
                 if (pickedUp == true && Movement.GetComponent<PlayerMovement>().pickedUpObject == true)
                 {
-                    if (Input.GetKeyDown(KeyCode.G))
+                    if (Input.GetKeyDown(KeyCode.K))
                     {
                         Movement.GetComponent<PlayerMovement>().runSpeed *= 1.5f;
                         Player.GetComponent<CharacterController2D>().jumpVelocity = 15;

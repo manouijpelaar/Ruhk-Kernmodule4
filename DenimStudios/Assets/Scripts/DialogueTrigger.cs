@@ -10,7 +10,7 @@ public class DialogueTrigger : MonoBehaviour
     private void Start()
     {
         platform.GetComponent<BoxCollider>().isTrigger = true;
-        player.GetComponent<CharMove>().enabled = true;
+        player.GetComponent<CharacterController2D>().enabled = true;
     }
 
     // when player collides with object dialogue will be triggered

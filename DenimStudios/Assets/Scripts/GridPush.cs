@@ -9,7 +9,7 @@ public class GridPush : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (!isPushed)
+        if (!isPushed && collision.gameObject.tag == "Player")
         {
             GetComponent<Rigidbody>().isKinematic = false;
             GetComponent<Rigidbody>().AddForce(transform.forward * pushPower);
