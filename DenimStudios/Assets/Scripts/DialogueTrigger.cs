@@ -18,7 +18,7 @@ public class DialogueTrigger : MonoBehaviour
     {   
         if (texttrigger.gameObject.tag == "Player")
         {
-            player.GetComponent<CharMove>().enabled = false;
+            player.GetComponent<CharacterController2D>().enabled = false;
             platform.GetComponent<BoxCollider>().isTrigger = false;
             FindObjectOfType<DialogueManager>().StartDialogue(dialogue);
             Debug.Log("starting conversation");

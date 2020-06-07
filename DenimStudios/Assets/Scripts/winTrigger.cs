@@ -12,7 +12,7 @@ public class winTrigger : MonoBehaviour
     {   // when player collides with winscene, level complete
         if (win.gameObject.tag == "Player")
         {
-            player.GetComponent<CharMove>().enabled = false;
+            player.GetComponent<CharacterController2D>().enabled = false;
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
             Debug.Log("You Win!");
         }
