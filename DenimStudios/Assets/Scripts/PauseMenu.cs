@@ -47,6 +47,11 @@ public class PauseMenu : MonoBehaviour
     public void LoadLevelSelect()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene("LevelSelect");
+        SceneManager.LoadScene("Menu");
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 }
