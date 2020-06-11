@@ -5,68 +5,83 @@ using UnityEngine;
 public class PickUp : MonoBehaviour
 {
     public Transform TheDest;
-    public GameObject eggParent;
+
     public bool pickedUp;
+    public bool pickedUpObject;
+
+    public bool StartTime = false;
+    public float TimeStamp = 2;
+
     public CharacterController2D Player;
     public PlayerMovement Movement;
+
+    public Collider Egg;
 
     void Start()
     {
         pickedUp = false;
-        Movement.GetComponent<PlayerMovement>().pickedUpObject = false;
+        pickedUpObject = false;
+        TimeStamp -= Time.deltaTime;
+        //Destination = TheDest.position = Object.transform.position;
     }
 
-    void OnTriggerStay(Collider egg)
+    void Update()
     {
-        if (egg.gameObject.tag == "Player")
+        if (StartTime)
+            TimeStamp -= Time.deltaTime;
+
+        //Neerzetten
+        if (pickedUp == true && pickedUpObject == true && TimeStamp < 0)
         {
-            if (pickedUp == false && Movement.GetComponent<PlayerMovement>().pickedUpObject == false)
+            if (Input.GetKeyDown(KeyCode.K))
             {
-                if (Input.GetKeyDown(KeyCode.J))
+                Egg.GetComponent<BoxCollider>().enabled = true;
+                Egg.GetComponent<Rigidbody>().useGravity = true;
+                Egg.GetComponent<Rigidbody>().isKinematic = false;
+
+                Player.GetComponent<CharacterController2D>().jumpVelocity = 15;
+                Movement.GetComponent<PlayerMovement>().runSpeed *= 1.5f;
+                if (Egg.transform.parent != null)
                 {
-                    eggParent.GetComponent<CapsuleCollider>().enabled = false;
-                    eggParent.GetComponent<Rigidbody>().useGravity = false;
-                    eggParent.transform.position = TheDest.position;
-                    eggParent.GetComponent<Rigidbody>().isKinematic = true;
-                    eggParent.transform.parent = GameObject.Find("Destination").transform;
-                    pickedUp = true;
-                    Movement.GetComponent<PlayerMovement>().pickedUpObject = true;
+                    Egg.transform.parent = null;
+                }
+                pickedUp = false;
+                pickedUpObject = false;
+            }
+        }
+    }
+
+    void OnTriggerStay(Collider Object)
+    {
+        Debug.Log(pickedUp);
+        Debug.Log(pickedUpObject);
+        string Tag = Object.gameObject.tag;
+
+        //Oppakken
+        if (Tag == "Pickable" || pickedUpObject == false)
+        {
+            if (pickedUp == false && pickedUpObject == false)
+            {
+                if (Input.GetKeyDown(KeyCode.K))
+                {
+                    Egg = Object;
+                    Object.GetComponent<BoxCollider>().enabled = true; 
+                    Object.transform.position = TheDest.position;
+                    
+                    Object.transform.parent = GameObject.Find("Destination").transform;
+                    StartTime = true;
+                    TimeStamp = 0.1f;
+                    Object.GetComponent<Rigidbody>().useGravity = false;
+                    Object.GetComponent<Rigidbody>().isKinematic = true;
+
                     Player.GetComponent<CharacterController2D>().jumpVelocity = 0;
                     Movement.GetComponent<PlayerMovement>().runSpeed /= 1.5f;
+
+                    pickedUp = true;
+                    pickedUpObject = true;
                     Debug.Log("pickup");
                 }
             }
-
-            else
-            {
-                if (pickedUp == true && Movement.GetComponent<PlayerMovement>().pickedUpObject == true)
-                {
-                    if (Input.GetKeyDown(KeyCode.K))
-                    {
-                        Movement.GetComponent<PlayerMovement>().runSpeed *= 1.5f;
-                        Player.GetComponent<CharacterController2D>().jumpVelocity = 15;
-                        eggParent.transform.parent = null;
-                        eggParent.GetComponent<CapsuleCollider>().enabled = true;
-                        eggParent.GetComponent<Rigidbody>().useGravity = true;
-                        eggParent.GetComponent<Rigidbody>().isKinematic = false;
-
-                        if (Player.m_FacingRight == true)
-                        {
-                            eggParent.transform.position = new Vector3(TheDest.position.x + 2, TheDest.position.y + 1, TheDest.position.z);
-
-                        }
-                        if (Player.m_FacingRight == false)
-                        {
-                            eggParent.transform.position = new Vector3(TheDest.position.x - 2, TheDest.position.y + 1, TheDest.position.z);
-                        }
-
-                        pickedUp = false;
-                        Movement.GetComponent<PlayerMovement>().pickedUpObject = false;
-                        Debug.Log("loss!");
-                    }
-                }
-            }
         }
-
     }
 }
